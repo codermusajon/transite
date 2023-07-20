@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>1-web program</title>
+    <meta name="viewport" content="width=device-width, intial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static '/semantic-ui/semantic.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5105646883209462"
+     crossorigin="anonymous"></script>
+    <style media="screen">
+    button{
+      cursor: pointer;
+    }
+    body{
+    background-image: url('https://4kwallpapers.com/images/walls/thumbs_3t/11395.jpg');
+    background-size: cover;
+    background-position: center;
+    }
+    button:hover{
+      background-color: #588157;
+      font-size: 120%;
+      transform: scale(1.1);
+    }
+
+    .word {
+      position: relative;
+      display: inline-block;
+    }
+    .clicker {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      margin: 20px;
+    }
+
+  .header_lang {
+    display: none;
+    position: absolute;
+    background-color: #8ecae6;
+    min-width: 65px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 10px 12px;
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  .header_lang li a:hover {
+    font-size: 120%;
+  }
+
+
+  .word:hover .header_lang {
+    display: block;
+  }
+  input::placeholder {
+    color: #e248cc;
+    font-style: italic;
+  }
+
+
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    list-style: none;
+  }
+  .word span {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+  }
+  .header_lang:hover ul {
+    display: block;
+     }
+    </style>
+  </head>
+  <body>
+    <div class="ui header segment">
+      <div class="ui container">
+        <h1 style='text-align:center' class="ui header">Online translator</h1>
+        <div class="ui divider"></div>
+        <div class="navtop" style="
+          height:80px;
+          display:flex;
+          justify-content: space-between;
+          max-width: 1440px;
+          width: 100%;
+          align-items: center;
+          margin: 0 auto;
+          padding: 0 80px;
+          z-index: 9;
+          position: relative;
+        ">
+          <p>Fast, convenience, free translaor</p>
+          <div class="word" style="display:flex">
+            <span>
+              <img src="https://mohir.ai/eng.png" alt="uz" style="
+                height:20px;
+             ">
+             {{lang}}
+          </span>
+          <ul class="header_lang" style="left: -10px; text-align: center;">
+            <li>
+              <a href="/">uz</a>
+            </li>
+            <li>
+            <a href="/en-US">en</a></li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui container">
+      <div class="ui placeholder segment">
+        <form method="post" action="/" class="ui icon header">
+          English
+          <!--<button style="font-size:24px" type="button" <i class="retweet icon" name="swap"><i></button>-->
+          <a href="/" class="clicker">uz-en</a>
+          Uzbek
+        </form>
+        <div class="inline" style="width:90%;">
+          <div class="ui massive form search">
+            <form method="GET" action="/en-US/" class="ui icon input" style="width:100%;">
+              <input name="que" style="font-style: italic; color: #48cce2" value="{{qu}}" class="prompt" type="text" placeholder="Enter the word..." />
+              <i class="search link icon"></i>
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui piled segment">
+        <h4 class="ui header">Result</h4>
+        <table class="ui celled large olive table">
+          <thead>
+            <tr>
+              <th><i class="united kingdom flag"></i>English</th>
+              <th><i class="uzbekistan flag"></i>Uzbek</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td>{{q}}</td>
+            <td>{{natija}}</td>
+          </tbody>
+        </table>
+        {% with sliced_audiom=audiom|slice:":5" %}
+          {% if sliced_audiom == 'https' %}
+          <audio id="myAudio" controls>
+            <source src="{{ audiom }}" type="audio/ogg">
+          </audio>
+          {% else %}
+            <h2>{{ audiom }}</h2>
+          {% endif %}
+        {% endwith %}
+        <h2>Definitions:</h2>
+        <ul>
+          {% for sense in senses %}
+            <li>👉{{ sense.definitions|slice:"1"|first}}</li>
+          {%endfor%}
+        </ul>
+
+      </div>
+      <script>
+// Get the audio element
+          var audio = document.getElementById("myAudio");
+
+// Function to play the audio with a delay
+          function playAudioWithDelay() {
+              setTimeout(function() {
+                  audio.play();
+                  setTimeout(function() {
+                    audio.currentTime = 0;
+                    audio.play();
+                  }, 2000);
+              }, 2000);  // Delay in milliseconds (2 seconds in this case)
+          }
+
+// Call the playAudioWithDelay function after the page loads
+          window.onload = playAudioWithDelay;
+      </script>
+
+
+    </div>
+
+  </body>
+</html>

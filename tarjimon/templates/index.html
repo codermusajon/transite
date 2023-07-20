@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>1-web dasturim</title>
+    <meta name="viewport" content="width=device-width, intial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static '/semantic-ui/semantic.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5105646883209462"
+     crossorigin="anonymous"></script>
+    <style media="screen">
+    button{
+      cursor: pointer;
+
+    }
+    body{
+    background-color: #a2d2ff
+    }
+    button:hover{
+      background-color: #48cae4;
+      font-size: 120%;
+      transform: scale(1.1);
+    }
+
+    .word {
+      position: relative;
+      display: inline-block;
+    }
+
+  .header_lang {
+    display: none;
+    position: absolute;
+    background-color: #8ecae6;
+    min-width: 65px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 10px 12px;
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  .header_lang li a:hover {
+    font-size: 120%;
+  }
+  .clicker {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin: 20px;
+  }
+
+
+  .word:hover .header_lang {
+    display: block;
+  }
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    list-style: none;
+  }
+  .word span {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+  }
+  .header_lang:hover ul {
+    display: block;
+     }
+  a.clicker:hover {
+    background-color: #264653;
+    font-size: 110%;
+   }
+    </style>
+  </head>
+  <body>
+    <div class="ui header segment">
+      <div class="ui container">
+        <h1 style='text-align:center' class="ui header">Onlayn lug'at</h1>
+        <div class="ui divider"></div>
+        <div class="navtop" style="
+          height:80px;
+          display:flex;
+          justify-content: space-between;
+          max-width: 1440px;
+          width: 100%;
+          align-items: center;
+          margin: 0 auto;
+          padding: 0 80px;
+          z-index: 9;
+          position: relative;
+        ">
+          <p>Tezlik, qulaylik, bepul tarjimon</p>
+          <div class="word" style="display:flex">
+            <span>
+              <img src="https://mohir.ai/uz.png" alt="uz" style="
+                height:20px;
+             ">
+             {{lang}}
+          </span>
+          <ul class="header_lang" style="left: -10px; text-align: center;">
+            <li>
+              <a href="/">uz</a>
+            </li>
+            <li>
+            <a href="/en-US">en</a></li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui container">
+      <div class="ui placeholder segment">
+        <form method="post" action="/en-US" class="ui icon header">
+          O'zbekcha
+          <!--<button style="font-size:10px;margin: 0px 20px;" type="button" ><a href='/en-US' class="retweet icon"></a></button>-->
+          <a href="/en-US" class="clicker">ing-o'z</a>
+          Inglizcha
+        </form>
+        <div class="inline" style="width:90%;">
+          <div class="ui massive form search">
+            <form method="GET" action="/" class="ui icon input" style="width:100%;">
+              <input name="q" style="font-style: italic; color: #48cce2" value="{{qu}}" class="prompt" type="text" placeholder="So'zni kiriting ..." />
+              <i class="search link icon"></i>
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui piled segment">
+        <h4 class="ui header">Natija</h4>
+        <table class="ui celled large olive table">
+          <thead>
+            <tr>
+              <th><i class="united kingdom flag"></i>Inglizcha</th>
+              <th><i class="uzbekistan flag"></i>O'zbekcha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td>{{natija}}</td>
+            <td>{{q}}</td>
+          </tbody>
+        </table>
+        {% with sliced_audiom=audiom|slice:":5" %}
+          {% if sliced_audiom == 'https' %}
+          <audio id="myAudio" controls>
+            <source src="{{ audiom }}" type="audio/ogg">
+          </audio>
+          {% else %}
+            <h2>{{ audiom }}</h2>
+          {% endif %}
+        {% endwith %}
+      </div>
+      <script>
+// Get the audio element
+          var audio = document.getElementById("myAudio");
+
+// Function to play the audio with a delay
+          function playAudioWithDelay() {
+              setTimeout(function() {
+                  audio.play();
+                  setTimeout(function() {
+                    audio.currentTime = 0;
+                    audio.play();
+                  }, 2000);
+              }, 2000);  // Delay in milliseconds (2 seconds in this case)
+          }
+
+// Call the playAudioWithDelay function after the page loads
+          window.onload = playAudioWithDelay;
+      </script>
+
+    </div>
+
+  </body>
+</html>
